@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="left-panel">
+    <app-contact-search></app-contact-search>
+    <ng-container *ngIf="contacts$ | async as contacts; else noContacts">
+      <app-contact-list [contacts$]="contacts$" (contactSelected)="loadOrSelectContact($event)"></app-contact-list>
+    </ng-container>
+    <ng-template #noContacts>
+      <p>There are no contacts to display!</p>
+    </ng-template>
+  </div>
+  <div class="right-panel">
+    <ng-container *ngIf="selectedContact$ | async as selectedContact">
+      <app-contact-detail [contact]="selectedContact"></app-contact-detail>
+    </ng-container>
+  </div>
+</div>

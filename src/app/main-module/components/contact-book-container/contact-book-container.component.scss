@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  height: 100vh;
+
+  // .selected-contact-details {
+  //   border: 1px solid #066cd1;
+  //   padding: 10px;
+  //   border-radius: 8px;
+  //   background-color: #e9f5ff;
+  // }
+
+  .left-panel {
+    width: 40%;
+    background-color: #515151;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px;
+
+    .contact-search {
+  
+      img {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  .right-panel {
+    width: 60%;
+  }
+}

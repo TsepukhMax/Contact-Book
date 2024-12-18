@@ -1,0 +1,32 @@
+.contact-list {
+  padding: 10px;
+
+  h2 {
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .contact-card {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: white;
+    border-radius: 8px;
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: translateY(-3px);
+    }
+
+    .contact-id {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333333;
+    }
+
+    .contact-fullname {
+      margin-top: 5px;
+    }
+  }
+}

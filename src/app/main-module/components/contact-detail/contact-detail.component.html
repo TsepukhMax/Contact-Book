@@ -1,0 +1,16 @@
+<div class="contact-detail">
+  <!-- Text to select a contact -->
+  <div *ngIf="!contact" class="info-text">
+    Detailed information about the contact
+  </div>
+
+  <!-- Contact information, if selected -->
+  <div *ngIf="contact">
+    <h2>Contact Details</h2>
+    <div class="detail-row"><span>ID:</span> {{ contact.id }}</div>
+    <div class="detail-row"><span>Full Name:</span> {{ contact.firstName }} {{ contact.lastName }}</div>
+    <div class="detail-row"><span>Phone Number:</span> {{ contact.phoneNumber }}</div>
+    <div class="detail-row"><span>Email:</span> {{ contact.email }}</div>
+    <div class="detail-row"><span>Notes:</span> {{ contact.notes }}</div>
+  </div>
+</div>
