@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { IContactBook } from "../../../interfaces";
 import { ContactService } from "../../../services/contact.service";
 
@@ -11,24 +11,32 @@ import { ContactService } from "../../../services/contact.service";
 })
 export class ContactBookContainerComponent implements OnInit {
   contacts$: Observable<IContactBook[]>; // Observable
-  selectedContact$: Observable<IContactBook> | null = null; // Observable for choice contact
+  selectedContact$: Observable<IContactBook | null> = of(null); // Observable for choice contact
+  searchQuery: string = ""; // Зберігає пошуковий запит
 
   constructor(private contactService: ContactService) {
     // initialization Observable for grop of contact
     this.contacts$ = this.contactService.getContacts$();
   }
 
-  ngOnInit(): void {
-    // No additional subscriptions are required because an async pipe is used
+  ngOnInit(): void {} // No additional subscriptions are required because an async pipe is used
+
+  loadOrSelectContact(id: number | null): void {
+    // if id null, reset the selection
+    this.selectedContact$ = id
+      ? this.contactService.getContactById$(id)
+      : of(null); // emit null when the contact is not selected
   }
 
-  loadOrSelectContact(id: number): void {
-    // initialization Observable for corect contact
-    this.selectedContact$ = this.contactService.getContactById$(id);
-  }
+  onContactSearch(contacts: IContactBook[]): void {
+    this.contacts$ = of(contacts); // update the list of contacts
+    this.loadOrSelectContact(null); // Reset the contact selection
+  }  
 
-  onContactSearch(query: string): void {
-    // Updating the Observable to search for contacts
-    this.contacts$ = this.contactService.searchContact$(query);
+  onSearchQueryChange(query: string): void {
+    this.searchQuery = query;
+    if (!query.trim()) {
+      this.loadOrSelectContact(null); // drop the contact selection if the request is empty
+    }
   }
 }

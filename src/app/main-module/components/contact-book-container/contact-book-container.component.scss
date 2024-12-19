@@ -2,13 +2,6 @@
   display: flex;
   height: 100vh;
 
-  // .selected-contact-details {
-  //   border: 1px solid #066cd1;
-  //   padding: 10px;
-  //   border-radius: 8px;
-  //   background-color: #e9f5ff;
-  // }
-
   .left-panel {
     width: 40%;
     background-color: #515151;
@@ -27,5 +20,13 @@
 
   .right-panel {
     width: 60%;
+
+    p {
+      font-weight: bold;
+      font-size: 24px;
+      color: #333333;
+      margin-top: 50px;
+      text-align: center;
+    }
   }
 }

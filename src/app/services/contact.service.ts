@@ -33,12 +33,17 @@ export class ContactService {
 
   // Method for searching contact by request (Observable)
   searchContact$(query: string): Observable<IContactBook[]> {
-    const foundContacts = this.contacts.filter(
-      (contact) =>
-        contact.firstName.toLowerCase().includes(query.toLowerCase()) ||
-        contact.lastName.toLowerCase().includes(query.toLowerCase())
-    );
-    return of(foundContacts);
+    const lowerCaseQuery = query.toLowerCase();
+  
+    return of(this.contacts.filter((contact) => {
+      // Search by ID
+      if (!isNaN(Number(query))) {
+        return contact.id === Number(query);
+      }
+      // Search by name or surname
+      return contact.firstName.toLowerCase().includes(lowerCaseQuery) ||
+             contact.lastName.toLowerCase().includes(lowerCaseQuery);
+    }));
   }
 
   private generateFirstName(index: number): string {

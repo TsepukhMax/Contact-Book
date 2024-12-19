@@ -10,40 +10,36 @@ import { catchError, debounceTime, distinctUntilChanged, switchMap } from "rxjs/
   styleUrls: ["./contact-search.component.scss"],
   standalone: false,
 })
-export class ContactSearchComponent implements OnDestroy {
+export class ContactSearchComponent {
+  @Output() searchQueryChanged = new EventEmitter<string>(); // New exit for change request
   @Output() contactFound = new EventEmitter<IContactBook[]>();
   searchQuery$ = new Subject<string>();
-  private subscription: Subscription = new Subscription(); // save the subscription
 
   constructor(private contactService: ContactService) {}
 
   ngOnInit(): void {
-    this.subscription.add(
-      this.searchQuery$
-        .pipe(
-          debounceTime(300),
-          distinctUntilChanged(),
-          switchMap((query) =>
-            query?.trim()
-              ? this.contactService.searchContact$(query).pipe(
-                  catchError((error) => {
-                    console.error("Error searching contact:", error);
-                    return of([]); // In case of an error, we return an empty array
-                  })
-                )
-              : of([])
-          )
+    this.searchQuery$
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap((query) =>
+          query?.trim()
+            ? this.contactService.searchContact$(query)
+            : of([])
         )
-        .subscribe((contacts) => this.contactFound.emit(contacts))
-    );
+      )
+      .subscribe((contacts) => {
+        this.contactFound.emit(contacts);
+        this.searchQueryChanged.emit(contacts.length ? contacts[0].firstName : "");
+      });
   }
 
   onSearchChange(event: Event): void {
     const inputValue = (event.target as HTMLInputElement).value;
-    this.searchQuery$.next(inputValue); // We send the value to the stream
+    this.searchQuery$.next(inputValue);
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe(); // Clearing subscriptions
+  resetSearch(): void {
+    window.location.reload(); // updating the page
   }
 }
