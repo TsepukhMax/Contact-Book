@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  height: 100vh;
+
+  .left-panel {
+    width: 40%;
+    background-color: #515151;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px;
+
+    .contact-search {
+  
+      img {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  .right-panel {
+    width: 60%;
+
+    p {
+      font-weight: bold;
+      font-size: 24px;
+      color: #333333;
+      margin-top: 50px;
+      text-align: center;
+    }
+  }
+}
