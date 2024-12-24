@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { IContactBook } from '../interfaces';
+import { IContact, IContactShort } from '../interfaces';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ContactService {
-  private contacts: IContactBook[] = Array.from({ length: 50 }, (_, i) => {
+  private contacts: IContact[] = Array.from({ length: 50 }, (_, i) => {
     const firstName = this.generateFirstName(i);
     const lastName = this.generateLastName(i);
 
@@ -21,18 +21,23 @@ export class ContactService {
   });
 
   // Method to get all contacts (Observable)
-  getContacts$(): Observable<IContactBook[]> {
+  getContacts$(): Observable<IContact[]> {
     return of(this.contacts);
   }
 
+  // Method to get short contacts
+  getShortContacts$(): Observable<IContactShort[]> {
+    return of(this.contacts.map(({ id, firstName, lastName }) => ({ id, firstName, lastName })));
+  }
+
   // Method to get contact by ID (Observable)
-  getContactById$(id: number): Observable<IContactBook> {
+  getContactById$(id: number): Observable<IContact> {
     const contact = this.contacts.find((contact) => contact.id === id)!;
-    return of(contact);
+    return of(contact); // Повертаємо повний об'єкт IContact
   }
 
   // Method for searching contact by request (Observable)
-  searchContact$(query: string): Observable<IContactBook[]> {
+  searchContact$(query: string): Observable<IContactShort[]> {
     const lowerCaseQuery = query.toLowerCase();
   
     return of(this.contacts.filter((contact) => {
@@ -41,9 +46,13 @@ export class ContactService {
         return contact.id === Number(query);
       }
       // Search by name or surname
-      return contact.firstName.toLowerCase().includes(lowerCaseQuery) ||
-             contact.lastName.toLowerCase().includes(lowerCaseQuery);
-    }));
+      return (
+        contact.firstName.toLowerCase().includes(lowerCaseQuery) ||
+        contact.lastName.toLowerCase().includes(lowerCaseQuery)
+      );
+    })
+    .map(({ id, firstName, lastName }) => ({ id, firstName, lastName })), // Conversion into IContactShort
+    );
   }
 
   private generateFirstName(index: number): string {

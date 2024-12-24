@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { IContactBook } from "../../../interfaces";
+import { IContactShort } from "../../../interfaces";
 import { Observable } from "rxjs";
 
 @Component({
@@ -9,7 +9,7 @@ import { Observable } from "rxjs";
   standalone: false,
 })
 export class ContactListComponent {
-  @Input() contacts$: Observable<IContactBook[]> | null = null;
+  @Input() contacts$: Observable<IContactShort[]> | null = null;
   @Input() searchQuery: string = ""; // For a search query
   @Output() contactSelected = new EventEmitter<number>();
 
@@ -20,7 +20,7 @@ export class ContactListComponent {
     this.contactSelected.emit(id); // emit the contact selection event
   }
 
-  isContactVisible(contact: IContactBook): boolean {
+  isContactVisible(contact: IContactShort): boolean {
     // check whether the contact corresponds to the search request
     const query = this.searchQuery.toLowerCase();
     return (
@@ -30,7 +30,7 @@ export class ContactListComponent {
     );
   }
 
-  isContactHighlighted(contact: IContactBook): boolean {
+  isContactHighlighted(contact: IContactShort): boolean {
     // highlight if the contact exactly matches the search query
     const query = this.searchQuery.toLowerCase();
     return (

@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { IContactBook } from "../../../interfaces";
+import { IContact } from "../../../interfaces";
 
 @Component({
   selector: "app-contact-detail",
@@ -8,5 +8,5 @@ import { IContactBook } from "../../../interfaces";
   standalone: false,
 })
 export class ContactDetailComponent {
-  @Input() contact?: IContactBook; // We assume that the contact will always be transferred
+  @Input() contact?: IContact; // We assume that the contact will always be transferred
 }

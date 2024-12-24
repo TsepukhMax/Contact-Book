@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output, OnDestroy } from "@angular/core";
 import { ContactService } from "../../../services/contact.service";
-import { IContactBook } from "../../../interfaces";
+import { IContactShort } from "../../../interfaces";
 import { Subject, of, Subscription } from "rxjs";
 import { catchError, debounceTime, distinctUntilChanged, switchMap } from "rxjs/operators";
 
@@ -12,7 +12,7 @@ import { catchError, debounceTime, distinctUntilChanged, switchMap } from "rxjs/
 })
 export class ContactSearchComponent {
   @Output() searchQueryChanged = new EventEmitter<string>(); // New exit for change request
-  @Output() contactFound = new EventEmitter<IContactBook[]>();
+  @Output() contactFound = new EventEmitter<IContactShort[]>();
   searchQuery$ = new Subject<string>();
 
   constructor(private contactService: ContactService) {}
