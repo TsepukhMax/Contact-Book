@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { IContactShort } from "../../../interfaces";
 
 @Component({
@@ -7,10 +7,7 @@ import { IContactShort } from "../../../interfaces";
   styleUrls: ["./contact-book.component.scss"],
   standalone: false,
 })
-export class ContactBookComponent implements OnInit {
+export class ContactBookComponent {
   shortContacts: IContactShort[] = []; // Array for saving short contacts
   selectedContactId: number; // The ID of the selected contact
-
-  ngOnInit(): void {}
-
 }
