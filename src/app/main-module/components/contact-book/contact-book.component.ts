@@ -23,7 +23,7 @@ export class ContactBookComponent {
     { id: 10, firstName: "Eric", lastName: "Taylor" },
   ];
 
-  selectedContactId: number = 0; // The ID of the selected contact
+  selectedContactId: number; // The ID of the selected contact
 }
 
 // Contact arrays outside the classroom
