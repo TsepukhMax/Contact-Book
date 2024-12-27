@@ -6,5 +6,5 @@ import { Component } from "@angular/core";
   styleUrls: ["./contact-search.component.scss"],
   standalone: false,
 })
-export class ContactSearchComponent {
-}
+
+export class ContactSearchComponent {}

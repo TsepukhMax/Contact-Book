@@ -8,5 +8,5 @@ import { IContact } from "../../../interfaces";
   standalone: false,
 })
 export class ContactDetailComponent {
-  @Input() contact?: IContact; // We assume that the contact will always be transferred
+  @Input() contact: IContact; // We assume that the contact will always be transferred
 }
