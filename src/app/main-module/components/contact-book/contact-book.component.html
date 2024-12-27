@@ -1,9 +1,16 @@
 <div class="container">
   <div class="left-panel">
     <app-contact-search></app-contact-search>
-      <p>There are no contacts to display!</p>
+      <p *ngIf="shortContacts.length === 0">There are no contacts to display!</p>
+      <app-contact-item 
+      *ngFor="let contact of shortContacts" 
+      [firstName]="contact.firstName" 
+      [lastName]="contact.lastName">
+    </app-contact-item>
   </div>
   <div class="right-panel"> 
-    <p class="placeholder-text">Please select a contact to see details!</p>
+    <p *ngIf="shortContacts.length > 0 && !selectedContactId">
+      Please select a contact to see details!
+    </p>
   </div>
 </div>

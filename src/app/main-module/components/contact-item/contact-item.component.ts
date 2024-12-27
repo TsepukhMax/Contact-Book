@@ -7,5 +7,6 @@ import { Component, Input } from "@angular/core";
   standalone: false,
 })
 export class ContactItemComponent {
-  @Input() fullName: string = ''; // Значення за замовчуванням
+  @Input() firstName: string = ''; // name of contact
+  @Input() lastName: string = '';  // lastName of contact
 }
