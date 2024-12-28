@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { ContactBookComponent } from './components/contact-book/contact-book.component';
-import { ContactItemComponent } from './components/contact-item/contact-list.component';
+import { ContactItemComponent } from './components/contact-item/contact-item.component';
 import { ContactDetailComponent } from './components/contact-detail/contact-detail.component';
 import { CommonModule } from '@angular/common';
 import { ContactSearchComponent } from './components/contact-search/contact-search.component';
