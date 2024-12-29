@@ -5,13 +5,19 @@
   .left-panel {
     width: 40%;
     background-color: #515151;
-    overflow-y: auto;
-    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
     padding: 20px;
+    overflow: hidden;
+
+    .contacts-container {
+      overflow-y: auto;
+    }
   }
 
   .right-panel {
     width: 60%;
+    padding: 20px;
 
     p {
       font-weight: bold;
@@ -19,6 +25,22 @@
       color: #333333;
       margin-top: 50px;
       text-align: center;
+    }
+
+    .close-button {
+      margin: 10px 0 0 10px;
+      padding: 8px 16px;
+      border: none;
+      background-color: black;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        transform: translateY(-1px);
+        background-color: red;
+      }
     }
   }
 }

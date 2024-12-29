@@ -2,12 +2,14 @@
   <div class="left-panel">
     <app-contact-search></app-contact-search>
     <p *ngIf="!shortContacts.length">There are no contacts to display!</p>
-    <app-contact-item 
-      *ngFor="let contact of shortContacts" 
-      [firstName]="contact.firstName" 
-      [lastName]="contact.lastName"
-      (click)="selectContactById(contact.id)">
-    </app-contact-item>
+    <div class="contacts-container">
+      <app-contact-item 
+        *ngFor="let contact of shortContacts" 
+        [firstName]="contact.firstName" 
+        [lastName]="contact.lastName"
+        (click)="selectContactById(contact.id)">
+      </app-contact-item>
+    </div>
   </div>
   
   <div class="right-panel">
@@ -16,5 +18,12 @@
       [contact]="selectedContact">
     </app-contact-detail>
     <p *ngIf="!selectedContact">Select a contact to see details.</p>
+      <!-- button CLOSE -->
+    <button 
+    *ngIf="selectedContact" 
+    (click)="closeSelectedContact()" 
+    class="close-button">
+    Close
+  </button>
   </div>  
 </div>
