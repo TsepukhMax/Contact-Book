@@ -13,17 +13,11 @@
   </div>
   
   <div class="right-panel">
-    <app-contact-detail 
-      *ngIf="selectedContact" 
-      [contact]="selectedContact">
-    </app-contact-detail>
+    <ng-container *ngIf="selectedContact">
+      <app-contact-detail [contact]="selectedContact"></app-contact-detail>
+      <button (click)="closeSelectedContact()">Close</button>
+    </ng-container>
+    
     <p *ngIf="!selectedContact">Select a contact to see details.</p>
-      <!-- button CLOSE -->
-    <button 
-    *ngIf="selectedContact" 
-    (click)="closeSelectedContact()" 
-    class="close-button">
-    Close
-  </button>
-  </div>  
+  </div>
 </div>
