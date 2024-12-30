@@ -24,18 +24,4 @@
       font-style: italic;
     }
   }
-
-  button {
-    padding: 8px 16px;
-    border: none;
-    background-color: black;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-
-    &:hover {
-      transform: translateY(-1px);
-      background-color: red;
-    }
-  }
 }

@@ -5,13 +5,19 @@
   .left-panel {
     width: 40%;
     background-color: #515151;
-    overflow-y: auto;
-    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
     padding: 20px;
+    overflow: hidden;
+
+    .contacts-container {
+      overflow-y: auto;
+    }
   }
 
   .right-panel {
     width: 60%;
+    padding: 20px;
 
     p {
       font-weight: bold;
