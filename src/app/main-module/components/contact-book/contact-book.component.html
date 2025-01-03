@@ -1,6 +1,6 @@
 <div class="container">
   <div class="left-panel">
-    <app-contact-search></app-contact-search>
+    <app-contact-search (searchTermChanged)="onSearchTermChanged($event)"></app-contact-search>
     <p *ngIf="!shortContacts.length">There are no contacts to display!</p>
     <div class="contacts-container">
       <app-contact-item 
