@@ -27,4 +27,6 @@ export class ContactBookComponent {
   closeSelectedContact(): void {
     this.selectedContact = undefined; // close contact-detail
   }
+
+  onSearchTermChanged(searchTerm: string): void {}
 }

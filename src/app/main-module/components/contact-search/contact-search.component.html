@@ -1,9 +1,11 @@
 <div class="search-container">
   <img src="/img/search.jpg" alt="Search Icon" class="search-icon" />
   <input
+    #searchInput
     type="text"
     class="search-input"
     placeholder="Search"
+    (input)="onInput()"
   />
-  <button>Reset</button>
+  <button (click)="onReset()">Reset</button>
 </div>
