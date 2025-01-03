@@ -11,21 +11,17 @@ import { IContact, IContactShort } from "../../../interfaces";
 })
 export class ContactBookComponent {
 
-  shortcontacts: IContactShort[] = [];
+  shortContacts: IContactShort[] = [];
   selectedContact: IContact;
 
   constructor(private contactService: ContactService) {
-    // get all contacts
-    this.contactService.getContacts$().subscribe((data: IContactShort[]) => {
-      this.shortcontacts = data;
-    });
+    // get short contacts
+    this.shortContacts = this.contactService.getContacts();
   }
 
   // Method to select a contact by its ID
   selectContactById(id: number): void {
-    this.contactService.getContactById$(id).subscribe((contact: IContact) => {
-      this.selectedContact = contact;
-    });
+    this.selectedContact = this.contactService.getContactById(id);
   }
 
   closeSelectedContact(): void {

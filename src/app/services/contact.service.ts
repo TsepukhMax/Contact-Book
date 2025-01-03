@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { IContact, IContactShort } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ContactService {
-
   // Array for saving short contacts
   shortContacts: IContactShort[] = [
     { id: 1, firstName: "Artem", lastName: "Smith" },
@@ -55,14 +53,13 @@ export class ContactService {
     { id: 20, firstName: "Jacob", lastName: "Robinson", phoneNumber: "380677384269", email: "user20@example.com", notes: "This is a sample note for contact Jacob Robinson" },
   ];
 
-  // Method to get all contacts (Observable)
-  getContacts$(): Observable<IContactShort[]> {
-    return of(this.shortContacts);
+  // Method to get all contacts
+  getContacts(): IContactShort[] {
+    return this.shortContacts;
   }
 
-  // Method to get contact by ID (Observable)
-  getContactById$(id: number): Observable<IContact> {
-    const contact = this.fullContacts.find((contact) => contact.id === id)!;
-    return of(contact); // Повертаємо повний об'єкт IContact
+  // Method to get contact by ID
+  getContactById(id: number): IContact {
+    return this.fullContacts.find((contact) => contact.id === id);
   }
 }
