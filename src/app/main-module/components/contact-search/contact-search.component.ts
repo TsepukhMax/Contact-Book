@@ -7,7 +7,7 @@ import { Component, ViewChild, ElementRef, EventEmitter, Output } from "@angular
   standalone: false,
 })
 export class ContactSearchComponent {
-  @ViewChild('searchInput', { static: true }) searchInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('searchInput') searchInput: ElementRef<HTMLInputElement>;
 
   // Output EventEmitter with a generic string type
   @Output() searchTermChanged = new EventEmitter<string>();
