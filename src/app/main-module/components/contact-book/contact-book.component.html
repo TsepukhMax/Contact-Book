@@ -1,10 +1,10 @@
 <div class="container">
   <div class="left-panel">
-    <app-contact-search></app-contact-search>
-    <p *ngIf="!shortContacts.length">There are no contacts to display!</p>
+    <app-contact-search (searchTermChanged)="onSearchTermChanged($event)"></app-contact-search>
+    <p *ngIf="!shortContactsToDisplay.length">There are no contacts to display!</p>
     <div class="contacts-container">
       <app-contact-item 
-        *ngFor="let contact of shortContacts" 
+        *ngFor="let contact of shortContactsToDisplay" 
         [firstName]="contact.firstName" 
         [lastName]="contact.lastName"
         (click)="selectContactById(contact.id)">
