@@ -32,21 +32,13 @@ export class ContactBookComponent {
     this.selectedContact = undefined; // close contact-detail
   }
 
-  // Public getter to access shortContacts in the template
-  get contacts(): IContactShort[] {
-    return this.shortContacts;
-  }
-  
   // Contact filtering method
-  /**
-   * @param searchTerm - search term
-   */
   onSearchTermChanged(searchTerm: string): void {
     // Removes spaces from the beginning and end of a line
     const normalizedSearchTerm = searchTerm.toUpperCase().trim();
 
     // check for "truthy/falsy"
-    if (normalizedSearchTerm === "") {
+    if (!normalizedSearchTerm) {
       // If the search term is empty, we show all contacts
       this.shortContactsToDisplay = [...this.shortContacts];
       return;
