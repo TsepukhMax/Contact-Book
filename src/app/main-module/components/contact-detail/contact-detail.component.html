@@ -11,38 +11,27 @@
     </div>
 
     <!-- Editing mode -->
-    <form *ngIf="isEditing" (ngSubmit)="onSubmit()">
-      <div class="detail-row">
-        <label>
-          First Name:
-          <input type="text" [(ngModel)]="editableContact.firstName" name="firstName" required>
-        </label>
-      </div>
-      <div class="detail-row">
-        <label>
-          Last Name:
-          <input type="text" [(ngModel)]="editableContact.lastName" name="lastName" required>
-        </label>
-      </div>
-      <div class="detail-row">
-        <label>
-          Phone Number:
-          <input type="text" [(ngModel)]="editableContact.phoneNumber" name="phoneNumber" required>
-        </label>
-      </div>
-      <div class="detail-row">
-        <label>
-          Email:
-          <input type="email" [(ngModel)]="editableContact.email" name="email" required>
-        </label>
-      </div>
-      <div class="detail-row">
-        <label>
-          Notes:
-          <textarea [(ngModel)]="editableContact.notes" name="notes" required></textarea>
-        </label>
-      </div>
-      <button type="submit">Save</button>
+    <form *ngIf="isEditing" [formGroup]="contactForm">
+      <label>
+        First Name:
+        <input formControlName="firstName" type="text" />
+      </label>
+      <label>
+        Last Name:
+        <input formControlName="lastName" type="text" />
+      </label>
+      <label>
+        Phone Number:
+        <input formControlName="phoneNumber" type="text" />
+      </label>
+      <label>
+        Email:
+        <input formControlName="email" type="email" />
+      </label>
+      <label>
+        Notes:
+        <textarea formControlName="notes"></textarea>
+      </label>
     </form>
   </ng-container>
 </div>

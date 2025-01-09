@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { ContactBookComponent } from './components/contact-book/contact-book.component';
 import { ContactItemComponent } from './components/contact-item/contact-item.component';
@@ -16,7 +16,7 @@ import { ContactSearchComponent } from './components/contact-search/contact-sear
   ],
   imports: [
     CommonModule, // use for *ngFor, *ngIf...
-    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [
     ContactBookComponent, // export the components that are needed in the AppModule

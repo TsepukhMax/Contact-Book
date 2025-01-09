@@ -16,12 +16,12 @@
     <ng-container *ngIf="selectedContact">
       <app-contact-detail 
         [contact]="selectedContact"
-        [isEditing]="isEditing"
-        (editSaved)="endEditing()">
+        [isEditing]="isEditing">
       </app-contact-detail>
       <button (click)="closeSelectedContact()">Close</button>
-      <button *ngIf="!isEditing" (click)="startEditing()">Edit</button>
-      <button *ngIf="isEditing" (click)="cancelEditing()">Cancel</button>
+      <button (click)="toggleEditing()">
+        {{ isEditing ? 'Cancel' : 'Edit' }}
+      </button>
     </ng-container>
     
     <p *ngIf="!selectedContact">Select a contact to see details.</p>

@@ -33,18 +33,8 @@ export class ContactBookComponent {
     this.selectedContact = undefined; // close contact-detail
   }
 
-  // Called when pressed button "Edit"
-  startEditing(): void {
-    this.isEditing = true;
-  }
-
-  // Called when pressed button "Cancel"
-  cancelEditing(): void {
-    this.isEditing = false;
-  }
-
-  endEditing(): void {
-    this.isEditing = false;
+  toggleEditing(): void {
+    this.isEditing = !this.isEditing;
   }
 
   // Contact filtering method

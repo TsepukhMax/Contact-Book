@@ -1,5 +1,6 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, Input, SimpleChanges } from "@angular/core";
 import { IContact } from "../../../interfaces";
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: "app-contact-detail",
@@ -10,23 +11,21 @@ import { IContact } from "../../../interfaces";
 export class ContactDetailComponent {
   @Input() contact: IContact; // We assume that the contact will always be transferred
   @Input() isEditing: boolean = false; // Editing mode
-  @Output() editSaved = new EventEmitter<void>();
 
-  // create a copy of the contact
-  editableContact: IContact;
+  contactForm!: FormGroup;
 
-  ngOnChanges(): void {
-    this.editableContact = { ...this.contact };
-  }
+  constructor(private fb: FormBuilder) {}
 
-  // save chenges
-  onSubmit(): void {
-    this.contact = { ...this.editableContact };
-    this.isEditing = false; // Exit editing mode
-    this.editSaved.emit();
-  }
-
-  cancelEdit(): void {
-    this.editableContact = null; // Cancel temporary changes
+  ngOnChanges(changes: SimpleChanges): void {
+    // if changed contact
+    if (changes['contact'] && this.contact) {
+      this.contactForm = this.fb.group({
+        firstName: [this.contact.firstName],
+        lastName: [this.contact.lastName],
+        phoneNumber: [this.contact.phoneNumber],
+        email: [this.contact.email],
+        notes: [this.contact.notes],
+      });
+    }
   }
 }
