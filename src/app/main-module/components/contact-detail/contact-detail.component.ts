@@ -17,18 +17,27 @@ export class ContactDetailComponent {
   constructor(private fb: FormBuilder) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    // create a form when editing mode is onn
     if (changes.isEditing) {
-      this.contactForm = this.fb.group({
-        firstName: [this.contact.firstName],
-        lastName: [this.contact.lastName],
-        phoneNumber: [this.contact.phoneNumber],
-        email: [this.contact.email],
-        notes: [this.contact.notes],
-      });
-    } else {
-      // when editing mode is off
-      this.contactForm = null; // delete form
+      const currentValue = changes.isEditing.currentValue;
+      if (currentValue) {
+        this.createForm();
+      } else {
+        this.deleteForm();
+      }
     }
+  }
+  
+  createForm(): void {
+    this.contactForm = this.fb.group({
+      firstName: [this.contact.firstName],
+      lastName: [this.contact.lastName],
+      phoneNumber: [this.contact.phoneNumber],
+      email: [this.contact.email],
+      notes: [this.contact.notes],
+    });
+  }
+  
+  deleteForm(): void {
+    this.contactForm = null;
   }
 }

@@ -7,7 +7,7 @@
         *ngFor="let contact of shortContactsToDisplay" 
         [firstName]="contact.firstName" 
         [lastName]="contact.lastName"
-        [class.selected]="contact === selectedContact"
+        [isSelected]="contact.id === selectedContact?.id"
         (click)="selectContactById(contact.id)">
       </app-contact-item>
     </div>
