@@ -1,11 +1,37 @@
 <div class="contact-detail">
-  <!-- Contact information, if selected -->
-  <div *ngIf="contact">
+  <ng-container *ngIf="contact">
     <h2>Contact Details</h2>
-    <div class="detail-row"><span>ID:</span> {{ contact.id }}</div>
-    <div class="detail-row"><span>Full Name:</span> {{ contact.firstName }} {{ contact.lastName }}</div>
-    <div class="detail-row"><span>Phone Number:</span> {{ contact.phoneNumber }}</div>
-    <div class="detail-row"><span>Email:</span> {{ contact.email }}</div>
-    <div class="detail-row"><span>Notes:</span> {{ contact.notes }}</div>
-  </div>
+
+    <!-- View mode (normal) -->
+    <div *ngIf="!isEditing">
+      <div class="detail-row"><span>Full Name:</span> {{ contact.firstName }} {{ contact.lastName }}</div>
+      <div class="detail-row"><span>Phone Number:</span> {{ contact.phoneNumber }}</div>
+      <div class="detail-row"><span>Email:</span> {{ contact.email }}</div>
+      <div class="detail-row"><span>Notes:</span> {{ contact.notes }}</div>
+    </div>
+
+    <!-- Editing mode -->
+    <form *ngIf="isEditing" [formGroup]="contactForm">
+      <label>
+        First Name:
+        <input formControlName="firstName" type="text" />
+      </label>
+      <label>
+        Last Name:
+        <input formControlName="lastName" type="text" />
+      </label>
+      <label>
+        Phone Number:
+        <input formControlName="phoneNumber" type="text" />
+      </label>
+      <label>
+        Email:
+        <input formControlName="email" type="email" />
+      </label>
+      <label>
+        Notes:
+        <textarea formControlName="notes"></textarea>
+      </label>
+    </form>
+  </ng-container>
 </div>

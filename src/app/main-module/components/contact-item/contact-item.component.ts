@@ -9,4 +9,5 @@ import { Component, Input } from "@angular/core";
 export class ContactItemComponent {
   @Input() firstName: string = ''; // name of contact
   @Input() lastName: string = '';  // lastName of contact
+  @Input() isSelected: boolean = false;
 }

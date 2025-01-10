@@ -14,6 +14,7 @@ export class ContactBookComponent {
   private shortContacts: IContactShort[] = [];
   shortContactsToDisplay: IContactShort[] = []; // Public property to display
   selectedContact: IContact;
+  isEditing = false;
 
   constructor(private contactService: ContactService) {
     // get short contacts
@@ -26,10 +27,16 @@ export class ContactBookComponent {
   // Method to select a contact by its ID
   selectContactById(id: number): void {
     this.selectedContact = this.contactService.getContactById(id);
+    this.isEditing = false;
   }
 
   closeSelectedContact(): void {
     this.selectedContact = undefined; // close contact-detail
+    this.isEditing = false;
+  }
+
+  toggleEditing(): void {
+    this.isEditing = !this.isEditing;
   }
 
   // Contact filtering method

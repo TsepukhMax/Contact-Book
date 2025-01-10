@@ -7,6 +7,7 @@
         *ngFor="let contact of shortContactsToDisplay" 
         [firstName]="contact.firstName" 
         [lastName]="contact.lastName"
+        [isSelected]="contact.id === selectedContact?.id"
         (click)="selectContactById(contact.id)">
       </app-contact-item>
     </div>
@@ -14,8 +15,14 @@
   
   <div class="right-panel">
     <ng-container *ngIf="selectedContact">
-      <app-contact-detail [contact]="selectedContact"></app-contact-detail>
+      <app-contact-detail 
+        [contact]="selectedContact"
+        [isEditing]="isEditing">
+      </app-contact-detail>
       <button (click)="closeSelectedContact()">Close</button>
+      <button (click)="toggleEditing()">
+        {{ isEditing ? 'Cancel' : 'Edit' }}
+      </button>
     </ng-container>
     
     <p *ngIf="!selectedContact">Select a contact to see details.</p>
