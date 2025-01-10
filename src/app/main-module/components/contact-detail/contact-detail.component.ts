@@ -12,13 +12,13 @@ export class ContactDetailComponent {
   @Input() contact: IContact; // We assume that the contact will always be transferred
   @Input() isEditing: boolean = false; // Editing mode
 
-  contactForm!: FormGroup;
+  contactForm: FormGroup;
 
   constructor(private fb: FormBuilder) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    // if changed contact
-    if (changes['contact'] && this.contact) {
+    // create a form when editing mode is onn
+    if (changes.isEditing) {
       this.contactForm = this.fb.group({
         firstName: [this.contact.firstName],
         lastName: [this.contact.lastName],
@@ -26,6 +26,9 @@ export class ContactDetailComponent {
         email: [this.contact.email],
         notes: [this.contact.notes],
       });
+    } else {
+      // when editing mode is off
+      this.contactForm = null; // delete form
     }
   }
 }

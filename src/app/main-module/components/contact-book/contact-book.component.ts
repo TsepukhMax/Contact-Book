@@ -27,10 +27,12 @@ export class ContactBookComponent {
   // Method to select a contact by its ID
   selectContactById(id: number): void {
     this.selectedContact = this.contactService.getContactById(id);
+    this.isEditing = false;
   }
 
   closeSelectedContact(): void {
     this.selectedContact = undefined; // close contact-detail
+    this.isEditing = false;
   }
 
   toggleEditing(): void {
