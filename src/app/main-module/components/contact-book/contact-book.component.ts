@@ -1,6 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { ContactService } from "../../../services/contact.service";
 import { IContact, IContactShort } from "../../../interfaces";
+import { ContactDetailComponent } from "../contact-detail/contact-detail.component";
 
 
 @Component({
@@ -15,6 +16,9 @@ export class ContactBookComponent {
   shortContactsToDisplay: IContactShort[] = []; // Public property to display
   selectedContact: IContact;
   isEditing = false;
+  searchTerm: string = "";
+
+  @ViewChild("app-contact-detail", { static: false }) contactDetailComponent: ContactDetailComponent;
 
   constructor(private contactService: ContactService) {
     // get short contacts
@@ -37,6 +41,31 @@ export class ContactBookComponent {
 
   toggleEditing(): void {
     this.isEditing = !this.isEditing;
+  }
+
+  saveContact(): void {
+    console.log("Save contact method called"); // додайте цей рядок для перевірки
+    if (this.contactDetailComponent) {
+      const updatedContact = this.contactDetailComponent.getContactFromForm();
+      console.log('Updated contact from form:', updatedContact);
+      this.contactService.updateContact(updatedContact);
+      console.log('Updated contact sent to service:', updatedContact);
+
+      // Update short contacts list from the service
+      this.shortContacts = this.contactService.getContacts();
+      console.log('Updated short contacts list:', this.shortContacts);
+
+      // Update selected contact after saving
+      this.selectedContact = this.contactService.getContactById(updatedContact.id);
+      console.log('Selected contact after update:', this.selectedContact);
+
+      // Disable editing mode
+      this.isEditing = false;
+
+      // Filter contacts based on the search term
+      this.onSearchTermChanged(this.searchTerm);
+      console.log('Search term after save:', this.searchTerm);
+    }
   }
 
   // Contact filtering method
