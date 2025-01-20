@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges, Output, EventEmitter } from "@angular/core";
+import { Component, Input, SimpleChanges } from "@angular/core";
 import { IContact } from "../../../interfaces";
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -11,7 +11,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class ContactDetailComponent {
   @Input() contact: IContact; // We assume that the contact will always be transferred
   @Input() isEditing: boolean = false; // Editing mode
-  @Output() contactUpdated = new EventEmitter<IContact>();
 
   contactForm: FormGroup;
 
@@ -43,11 +42,13 @@ export class ContactDetailComponent {
   }
 
   getContactFromForm(): IContact {
-    return { id: this.contact.id, ...this.contactForm.value };
-  }
-
-  // Метод для збереження змін
-  saveContact(): void {
-    this.contactUpdated.emit(this.contactForm.value);
+    return {
+      id: this.contact.id,
+      firstName: this.contactForm.get('firstName').value,
+      lastName: this.contactForm.get('lastName').value,
+      phoneNumber: this.contactForm.get('phoneNumber').value,
+      email: this.contactForm.get('email').value,
+      notes: this.contactForm.get('notes').value,
+    };
   }
 }

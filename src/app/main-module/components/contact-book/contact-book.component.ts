@@ -18,7 +18,7 @@ export class ContactBookComponent {
   isEditing = false;
   searchTerm: string = "";
 
-  @ViewChild("app-contact-detail", { static: false }) contactDetailComponent: ContactDetailComponent;
+  @ViewChild(ContactDetailComponent, { static: false }) contactDetailComponent: ContactDetailComponent;
 
   constructor(private contactService: ContactService) {
     // get short contacts
@@ -44,33 +44,26 @@ export class ContactBookComponent {
   }
 
   saveContact(): void {
-    console.log("Save contact method called"); // додайте цей рядок для перевірки
-    if (this.contactDetailComponent) {
-      const updatedContact = this.contactDetailComponent.getContactFromForm();
-      console.log('Updated contact from form:', updatedContact);
-      this.contactService.updateContact(updatedContact);
-      console.log('Updated contact sent to service:', updatedContact);
+    const updatedContact = this.contactDetailComponent.getContactFromForm();
+    this.contactService.updateContact(updatedContact);
 
-      // Update short contacts list from the service
-      this.shortContacts = this.contactService.getContacts();
-      console.log('Updated short contacts list:', this.shortContacts);
+    // Update short contacts list from the service
+    this.shortContacts = this.contactService.getContacts();
 
-      // Update selected contact after saving
-      this.selectedContact = this.contactService.getContactById(updatedContact.id);
-      console.log('Selected contact after update:', this.selectedContact);
+    // Update selected contact after saving
+    this.selectedContact = this.contactService.getContactById(updatedContact.id);
 
-      // Disable editing mode
-      this.isEditing = false;
+    // Disable editing mode
+    this.isEditing = false;
 
-      // Filter contacts based on the search term
-      this.onSearchTermChanged(this.searchTerm);
-      console.log('Search term after save:', this.searchTerm);
-    }
+    // Filter contacts based on the search term
+    this.onSearchTermChanged(this.searchTerm);
   }
 
   // Contact filtering method
   onSearchTermChanged(searchTerm: string): void {
     // Removes spaces from the beginning and end of a line
+    this.searchTerm = searchTerm;
     const normalizedSearchTerm = searchTerm.toUpperCase().trim();
 
     // check for "truthy/falsy"
