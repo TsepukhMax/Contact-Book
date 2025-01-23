@@ -22,7 +22,7 @@ export class ContactBookComponent {
 
   constructor(private contactService: ContactService) {
     // get short contacts
-    this.shortContacts = this.SortedContacts();
+    this.shortContacts = this.getContacts();
 
     // Initialize contacts for display from cached data
     this.shortContactsToDisplay = [...this.shortContacts];
@@ -43,35 +43,30 @@ export class ContactBookComponent {
     this.isEditing = !this.isEditing;
 
     // Check for ID in selected contacts
-    if (this.selectedContact.id == null) {
+    if (!this.selectedContact.id) {
       this.selectedContact = null;
     }
   }
 
   saveContact(): void {
-    if (this.contactDetailComponent === undefined || this.selectedContact === null) {
-      return; // If there is no component or selected contact, nothing is saved
-    }
-
     const updatedContact = this.contactDetailComponent.getContactFromForm();
 
     if (!updatedContact) {
       return;
     }
 
-    let contactId: number;
+    let contactId = updatedContact.id;
 
-    if (updatedContact.id) {
+    if (contactId) {
       // if the ID exists, we update the contact
       this.contactService.updateContact(updatedContact);
-      contactId = updatedContact.id;
     } else {
       // add new contact
       contactId = this.contactService.addContact(updatedContact);
     }
 
     // Update short contacts list from the service
-    this.shortContacts = this.SortedContacts();
+    this.shortContacts = this.getContacts();
 
     // Update selected contact after saving
     this.selectedContact = this.contactService.getContactById(updatedContact.id);
@@ -106,7 +101,7 @@ export class ContactBookComponent {
     });
   }
 
-  private SortedContacts(): IContactShort[] {
+  private getContacts(): IContactShort[] {
     return this.contactService.getContacts().sort((a, b) =>
       a.firstName.localeCompare(b.firstName)
     );

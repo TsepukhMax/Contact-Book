@@ -41,7 +41,7 @@ export class ContactDetailComponent {
     this.contactForm = null;
   }
 
-  getContactFromForm(): IContact | null {
+  getContactFromForm(): IContact {
     if (this.contactForm.invalid) {
       return null; // Return null if the form is invalid
     }
