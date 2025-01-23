@@ -54,4 +54,12 @@ export class ContactService {
     const contactIndex = this.fullContacts.findIndex(contact => contact.id === updatedContact.id);
     this.fullContacts[contactIndex] = updatedContact;
   }
+
+  // Method to add contact
+  addContact(contact: IContact): number {
+    const newId = Date.now();
+    const newContact = { ...contact, id: newId };
+    this.fullContacts.push(newContact);
+    return newId;
+  }
 }

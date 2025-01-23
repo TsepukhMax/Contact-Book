@@ -22,7 +22,7 @@ export class ContactBookComponent {
 
   constructor(private contactService: ContactService) {
     // get short contacts
-    this.shortContacts = this.contactService.getContacts();
+    this.shortContacts = this.getContacts();
 
     // Initialize contacts for display from cached data
     this.shortContactsToDisplay = [...this.shortContacts];
@@ -41,14 +41,32 @@ export class ContactBookComponent {
 
   toggleEditing(): void {
     this.isEditing = !this.isEditing;
+
+    // Check for ID in selected contacts
+    if (!this.selectedContact.id) {
+      this.selectedContact = null;
+    }
   }
 
   saveContact(): void {
     const updatedContact = this.contactDetailComponent.getContactFromForm();
-    this.contactService.updateContact(updatedContact);
+
+    if (!updatedContact) {
+      return;
+    }
+
+    let contactId = updatedContact.id;
+
+    if (contactId) {
+      // if the ID exists, we update the contact
+      this.contactService.updateContact(updatedContact);
+    } else {
+      // add new contact
+      contactId = this.contactService.addContact(updatedContact);
+    }
 
     // Update short contacts list from the service
-    this.shortContacts = this.contactService.getContacts();
+    this.shortContacts = this.getContacts();
 
     // Update selected contact after saving
     this.selectedContact = this.contactService.getContactById(updatedContact.id);
@@ -81,5 +99,23 @@ export class ContactBookComponent {
       // check whether the full name includes the search term
       return fullName.includes(normalizedSearchTerm);
     });
+  }
+
+  private getContacts(): IContactShort[] {
+    return this.contactService.getContacts().sort((a, b) =>
+      a.firstName.localeCompare(b.firstName)
+    );
+  }
+
+  addNewContact(): void {
+    this.selectedContact = {
+      id: undefined,
+      firstName: undefined,
+      lastName: undefined,
+      phoneNumber: undefined,
+      email: undefined,
+      notes: undefined,
+    };
+    this.isEditing = true;
   }
 }

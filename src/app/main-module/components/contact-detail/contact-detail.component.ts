@@ -1,6 +1,6 @@
 import { Component, Input, SimpleChanges } from "@angular/core";
 import { IContact } from "../../../interfaces";
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: "app-contact-detail",
@@ -29,7 +29,7 @@ export class ContactDetailComponent {
   
   createForm(): void {
     this.contactForm = this.fb.group({
-      firstName: [this.contact.firstName],
+      firstName: [this.contact.firstName, [Validators.required, Validators.minLength(2)]],
       lastName: [this.contact.lastName],
       phoneNumber: [this.contact.phoneNumber],
       email: [this.contact.email],
@@ -42,6 +42,10 @@ export class ContactDetailComponent {
   }
 
   getContactFromForm(): IContact {
+    if (this.contactForm.invalid) {
+      return null; // Return null if the form is invalid
+    }
+    
     return {
       id: this.contact.id,
       firstName: this.contactForm.get('firstName').value,
