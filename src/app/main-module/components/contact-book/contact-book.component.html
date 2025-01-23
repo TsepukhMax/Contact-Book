@@ -23,6 +23,7 @@
       <button (click)="toggleEditing()">
         {{ isEditing ? 'Cancel' : 'Edit' }}
       </button>
+      <button *ngIf="isEditing" (click)="saveContact()">Save</button>
     </ng-container>
     
     <p *ngIf="!selectedContact">Select a contact to see details.</p>

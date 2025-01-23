@@ -40,4 +40,15 @@ export class ContactDetailComponent {
   deleteForm(): void {
     this.contactForm = null;
   }
+
+  getContactFromForm(): IContact {
+    return {
+      id: this.contact.id,
+      firstName: this.contactForm.get('firstName').value,
+      lastName: this.contactForm.get('lastName').value,
+      phoneNumber: this.contactForm.get('phoneNumber').value,
+      email: this.contactForm.get('email').value,
+      notes: this.contactForm.get('notes').value,
+    };
+  }
 }

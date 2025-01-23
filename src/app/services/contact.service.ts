@@ -5,29 +5,6 @@ import { IContact, IContactShort } from '../interfaces';
   providedIn: 'root',
 })
 export class ContactService {
-  // Array for saving short contacts
-  shortContacts: IContactShort[] = [
-    { id: 1, firstName: "Artem", lastName: "Smith" },
-    { id: 2, firstName: "Adam", lastName: "Johnson" },
-    { id: 3, firstName: "Adrian", lastName: "Williams" },
-    { id: 4, firstName: "Andrew", lastName: "Jones" },
-    { id: 5, firstName: "Arnold", lastName: "Brown" },
-    { id: 6, firstName: "Ashley", lastName: "Davis" },
-    { id: 7, firstName: "Dirk", lastName: "Miller" },
-    { id: 8, firstName: "Donald", lastName: "Wilson" },
-    { id: 9, firstName: "Douglas", lastName: "Moore" },
-    { id: 10, firstName: "Eric", lastName: "Taylor" },
-    { id: 11, firstName: "Franklin", lastName: "Anderson" },
-    { id: 12, firstName: "George", lastName: "Thomas" },
-    { id: 13, firstName: "Gregory", lastName: "Jackson" },
-    { id: 14, firstName: "Grant", lastName: "White" },
-    { id: 15, firstName: "Harry", lastName: "Harris" },
-    { id: 16, firstName: "Harold", lastName: "Martin" },
-    { id: 17, firstName: "Herman", lastName: "Thompson" },
-    { id: 18, firstName: "Howard", lastName: "Garcia" },
-    { id: 19, firstName: "Jack", lastName: "Martinez" },
-    { id: 20, firstName: "Jacob", lastName: "Robinson" },
-  ];
 
   // Array with full contact data
   fullContacts: IContact[] = [
@@ -53,6 +30,15 @@ export class ContactService {
     { id: 20, firstName: "Jacob", lastName: "Robinson", phoneNumber: "380677384269", email: "user20@example.com", notes: "This is a sample note for contact Jacob Robinson" },
   ];
 
+  // Getter for short contacts
+  get shortContacts(): IContactShort[] {
+    return this.fullContacts.map(({ id, firstName, lastName }) => ({
+      id,
+      firstName,
+      lastName,
+    }));
+  }
+
   // Method to get all contacts
   getContacts(): IContactShort[] {
     return this.shortContacts;
@@ -61,5 +47,11 @@ export class ContactService {
   // Method to get contact by ID
   getContactById(id: number): IContact {
     return this.fullContacts.find((contact) => contact.id === id);
+  }
+
+  // Method to update a contact
+  updateContact(updatedContact: IContact): void {
+    const contactIndex = this.fullContacts.findIndex(contact => contact.id === updatedContact.id);
+    this.fullContacts[contactIndex] = updatedContact;
   }
 }

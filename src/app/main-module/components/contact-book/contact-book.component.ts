@@ -1,6 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { ContactService } from "../../../services/contact.service";
 import { IContact, IContactShort } from "../../../interfaces";
+import { ContactDetailComponent } from "../contact-detail/contact-detail.component";
 
 
 @Component({
@@ -15,6 +16,9 @@ export class ContactBookComponent {
   shortContactsToDisplay: IContactShort[] = []; // Public property to display
   selectedContact: IContact;
   isEditing = false;
+  searchTerm: string = "";
+
+  @ViewChild(ContactDetailComponent, { static: false }) contactDetailComponent: ContactDetailComponent;
 
   constructor(private contactService: ContactService) {
     // get short contacts
@@ -39,9 +43,27 @@ export class ContactBookComponent {
     this.isEditing = !this.isEditing;
   }
 
+  saveContact(): void {
+    const updatedContact = this.contactDetailComponent.getContactFromForm();
+    this.contactService.updateContact(updatedContact);
+
+    // Update short contacts list from the service
+    this.shortContacts = this.contactService.getContacts();
+
+    // Update selected contact after saving
+    this.selectedContact = this.contactService.getContactById(updatedContact.id);
+
+    // Disable editing mode
+    this.isEditing = false;
+
+    // Filter contacts based on the search term
+    this.onSearchTermChanged(this.searchTerm);
+  }
+
   // Contact filtering method
   onSearchTermChanged(searchTerm: string): void {
     // Removes spaces from the beginning and end of a line
+    this.searchTerm = searchTerm;
     const normalizedSearchTerm = searchTerm.toUpperCase().trim();
 
     // check for "truthy/falsy"
