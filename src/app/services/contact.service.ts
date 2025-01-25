@@ -62,4 +62,9 @@ export class ContactService {
     this.fullContacts.push(newContact);
     return newId;
   }
+
+  // Method to delete a contact by ID
+  deleteContact(contactId: number): void {
+    this.fullContacts = this.fullContacts.filter(contact => contact.id !== contactId);
+  }
 }

@@ -118,4 +118,16 @@ export class ContactBookComponent {
     };
     this.isEditing = true;
   }
+
+  deleteContact(): void {
+    this.contactService.deleteContact(this.selectedContact.id);
+    this.resetAfterChange();
+  }
+  
+  private resetAfterChange(): void {
+    this.shortContacts = this.getContacts();
+    this.selectedContact = undefined;
+    this.isEditing = false;
+    this.onSearchTermChanged(this.searchTerm);
+  }
 }
