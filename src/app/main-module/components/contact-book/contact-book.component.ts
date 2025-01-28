@@ -55,10 +55,12 @@ export class ContactBookComponent {
       return;
     }
 
-    if (updatedContact.id) {
+    let contactId = updatedContact.id;
+
+    if (contactId) {
       this.contactService.updateContact(updatedContact);
     } else {
-      updatedContact.id = this.contactService.addContact(updatedContact);
+      contactId = this.contactService.addContact(updatedContact);
     }
 
     // Refresh the contact list and set the selected contact
