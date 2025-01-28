@@ -64,7 +64,7 @@ export class ContactBookComponent {
     }
 
     // Refresh the contact list and set the selected contact
-    this.refreshContactsList(updatedContact.id);
+    this.refreshContactsList(contactId);
   }
 
   // Contact filtering method
