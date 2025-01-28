@@ -58,24 +58,13 @@ export class ContactBookComponent {
     let contactId = updatedContact.id;
 
     if (contactId) {
-      // if the ID exists, we update the contact
       this.contactService.updateContact(updatedContact);
     } else {
-      // add new contact
       contactId = this.contactService.addContact(updatedContact);
     }
 
-    // Update short contacts list from the service
-    this.shortContacts = this.getContacts();
-
-    // Update selected contact after saving
-    this.selectedContact = this.contactService.getContactById(updatedContact.id);
-
-    // Disable editing mode
-    this.isEditing = false;
-
-    // Filter contacts based on the search term
-    this.onSearchTermChanged(this.searchTerm);
+    // Refresh the contact list and set the selected contact
+    this.refreshContactsList(contactId);
   }
 
   // Contact filtering method
@@ -117,5 +106,24 @@ export class ContactBookComponent {
       notes: undefined,
     };
     this.isEditing = true;
+  }
+
+  deleteContact(): void {
+    this.contactService.deleteContact(this.selectedContact.id);
+    this.refreshContactsList();
+  }
+
+  private refreshContactsList(selectedContactId?: number): void {
+    this.shortContacts = this.getContacts();
+    this.shortContactsToDisplay = [...this.shortContacts];
+
+    if (selectedContactId) {
+      this.selectedContact = this.contactService.getContactById(selectedContactId);
+    } else {
+      this.selectedContact = undefined;
+    }
+
+    this.isEditing = false;
+    this.onSearchTermChanged(this.searchTerm);
   }
 }

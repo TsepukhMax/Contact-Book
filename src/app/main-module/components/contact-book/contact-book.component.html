@@ -1,6 +1,7 @@
 <div class="container">
   <div class="left-panel">
     <app-contact-search (searchTermChanged)="onSearchTermChanged($event)"></app-contact-search>
+    <button class="addContact" (click)="addNewContact()">Add contact</button>
     <p *ngIf="!shortContactsToDisplay.length">There are no contacts to display!</p>
     <div class="contacts-container">
       <app-contact-item 
@@ -23,8 +24,8 @@
       <button (click)="toggleEditing()">
         {{ isEditing ? 'Cancel' : 'Edit' }}
       </button>
-      <button (click)="addNewContact()">Add</button>
       <button *ngIf="isEditing" (click)="saveContact()">Save</button>
+      <button *ngIf="selectedContact.id" (click)="deleteContact()">Delete</button>
     </ng-container>
     
     <p *ngIf="!selectedContact">Select a contact to see details.</p>
