@@ -38,3 +38,6 @@ Thumbs.db
 
 # History files
 .history/
+
+# server
+server/db.json
