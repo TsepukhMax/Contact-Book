@@ -22,10 +22,12 @@ export class ContactBookComponent {
 
   constructor(private contactService: ContactService) {
     // get short contacts
-    this.shortContacts = this.getContacts();
+    this.contactService.getContacts().subscribe((shortContacts: IContactShort[]) => {
+      this.shortContacts = this.sortContacts(shortContacts);
 
     // Initialize contacts for display from cached data
     this.shortContactsToDisplay = [...this.shortContacts];
+    });
   }
 
   // Method to select a contact by its ID
@@ -90,10 +92,10 @@ export class ContactBookComponent {
     });
   }
 
-  private getContacts(): IContactShort[] {
-    return this.contactService.getContacts().sort((a, b) =>
+  private sortContacts(shortContacts: IContactShort[]): IContactShort[] {
+    return shortContacts = shortContacts.sort((a, b) =>
       a.firstName.localeCompare(b.firstName)
-    );
+    )
   }
 
   addNewContact(): void {
@@ -114,16 +116,19 @@ export class ContactBookComponent {
   }
 
   private refreshContactsList(selectedContactId?: number): void {
-    this.shortContacts = this.getContacts();
-    this.shortContactsToDisplay = [...this.shortContacts];
+    this.contactService.getContacts().subscribe((shortContacts: IContactShort[]) => {
+      this.shortContacts = this.sortContacts(shortContacts);
 
-    if (selectedContactId) {
-      this.selectedContact = this.contactService.getContactById(selectedContactId);
-    } else {
-      this.selectedContact = undefined;
-    }
+      this.shortContactsToDisplay = [...this.shortContacts];
 
-    this.isEditing = false;
-    this.onSearchTermChanged(this.searchTerm);
+      if (selectedContactId) {
+        this.selectedContact = this.contactService.getContactById(selectedContactId);
+      } else {
+        this.selectedContact = undefined;
+      }
+  
+      this.isEditing = false;
+      this.onSearchTermChanged(this.searchTerm);
+    });
   }
 }
