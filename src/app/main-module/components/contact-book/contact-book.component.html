@@ -1,7 +1,7 @@
 <div class="container">
   <div class="left-panel">
     <app-contact-search (searchTermChanged)="onSearchTermChanged($event)"></app-contact-search>
-    <button class="addContact" (click)="addNewContact()">Add contact</button>
+    <button class="add-Contact" (click)="addNewContact()">Add contact</button>
     <p *ngIf="!shortContactsToDisplay.length">There are no contacts to display!</p>
     <div class="contacts-container">
       <app-contact-item 
