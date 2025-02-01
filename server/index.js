@@ -55,7 +55,7 @@ app.post('/contacts', (req, res) => {
     const contact = req.body.contact;
 
     if (!isContactValid(contact)) {
-        res.status(400).json({ errorMessage: 'Some required field are missed' });
+        res.status(400).json({ errorMessage: 'Some required field is missed' });
         return;
     }
 
@@ -63,7 +63,7 @@ app.post('/contacts', (req, res) => {
         contact.id = Date.now();
         data.push(contact);
         writeDb(data);
-        res.json(contact);
+        res.json(contact.id);
     });
 });
 
@@ -81,7 +81,7 @@ app.put('/contacts/:id', (req, res) => {
         const contact = req.body.contact;
 
         if (!isContactValid(contact)) {
-            res.status(400).json({ errorMessage: 'Some required field are missed' });
+            res.status(400).json({ errorMessage: 'Some required field is missed' });
             return;
         }
 
