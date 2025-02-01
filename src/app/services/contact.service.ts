@@ -51,8 +51,8 @@ export class ContactService {
   }
 
   // Method to get contact by ID
-  getContactById(id: number): IContact {
-    return this.fullContacts.find((contact) => contact.id === id);
+  getContactById(id: number): Observable<IContact> {
+    return this.httpClient.get<IContact>(`${this.baseUrl}contacts/${id}`);
   }
 
   // Method to update a contact

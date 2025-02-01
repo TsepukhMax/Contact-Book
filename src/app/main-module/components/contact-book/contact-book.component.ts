@@ -32,8 +32,10 @@ export class ContactBookComponent {
 
   // Method to select a contact by its ID
   selectContactById(id: number): void {
-    this.selectedContact = this.contactService.getContactById(id);
-    this.isEditing = false;
+    this.contactService.getContactById(id).subscribe((contact: IContact) => {
+      this.selectedContact = contact;
+      this.isEditing = false;
+    });
   }
 
   closeSelectedContact(): void {
@@ -122,7 +124,9 @@ export class ContactBookComponent {
       this.shortContactsToDisplay = [...this.shortContacts];
 
       if (selectedContactId) {
-        this.selectedContact = this.contactService.getContactById(selectedContactId);
+        this.contactService.getContactById(selectedContactId).subscribe((contact: IContact) => {
+          this.selectedContact = contact;
+        });
       } else {
         this.selectedContact = undefined;
       }
