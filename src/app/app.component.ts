@@ -7,6 +7,4 @@ import { MainModule } from './main-module/main-module';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
-  title = 'Contact-book';
-}
+export class AppComponent {}

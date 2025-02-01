@@ -124,13 +124,14 @@ export class ContactBookComponent {
       this.shortContactsToDisplay = [...this.shortContacts];
 
       if (selectedContactId) {
+        // TODO: use switch map or combine
         this.contactService.getContactById(selectedContactId).subscribe((contact: IContact) => {
           this.selectedContact = contact;
         });
       } else {
         this.selectedContact = undefined;
       }
-  
+
       this.isEditing = false;
       this.onSearchTermChanged(this.searchTerm);
     });
