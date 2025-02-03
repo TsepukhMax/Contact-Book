@@ -63,12 +63,12 @@ export class ContactBookComponent {
 
     if (contactId) {
       this.contactService.updateContact(updatedContact);
+      this.refreshContactsList(contactId);
     } else {
-      contactId = this.contactService.addContact(updatedContact);
+      this.contactService.addContact(updatedContact).subscribe(newId => {
+        this.refreshContactsList(newId);
+      })
     }
-
-    // Refresh the contact list and set the selected contact
-    this.refreshContactsList(contactId);
   }
 
   // Contact filtering method
