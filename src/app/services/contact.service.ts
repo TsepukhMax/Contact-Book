@@ -57,7 +57,7 @@ export class ContactService {
 
   // Method to update a contact
   updateContact(contact: IContact): Observable<number> {
-    return this.httpClient.put<number>(`${this.baseUrl}contacts/${contact.id}`, contact);
+    return this.httpClient.put<number>(`${this.baseUrl}contacts/${contact.id}`, {contact});
   }
 
   // Method to add contact
@@ -66,7 +66,7 @@ export class ContactService {
   }
 
   // Method to delete a contact by ID
-  deleteContact(contactId: number): void {
-    this.fullContacts = this.fullContacts.filter(contact => contact.id !== contactId);
+  deleteContact(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.baseUrl}contacts/${id}`);
   }
 }
