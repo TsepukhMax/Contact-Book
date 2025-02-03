@@ -2,6 +2,7 @@ import { Component, ViewChild } from "@angular/core";
 import { ContactService } from "../../../services/contact.service";
 import { IContact, IContactShort } from "../../../interfaces";
 import { ContactDetailComponent } from "../contact-detail/contact-detail.component";
+import { Observable } from "rxjs";
 
 
 @Component({
@@ -54,21 +55,22 @@ export class ContactBookComponent {
 
   saveContact(): void {
     const updatedContact = this.contactDetailComponent.getContactFromForm();
-
+  
     if (!updatedContact) {
       return;
     }
-
-    let contactId = updatedContact.id;
-
-    if (contactId) {
-      this.contactService.updateContact(updatedContact);
-      this.refreshContactsList(contactId);
+  
+    let request$: Observable<number>;
+  
+    if (updatedContact.id) {
+      request$ = this.contactService.updateContact(updatedContact);
     } else {
-      this.contactService.addContact(updatedContact).subscribe(newId => {
-        this.refreshContactsList(newId);
-      })
+      request$ = this.contactService.addContact(updatedContact);
     }
+  
+    request$.subscribe((newId: number) => {
+      this.refreshContactsList(newId);
+    });
   }
 
   // Contact filtering method

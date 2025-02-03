@@ -56,9 +56,8 @@ export class ContactService {
   }
 
   // Method to update a contact
-  updateContact(updatedContact: IContact): void {
-    const contactIndex = this.fullContacts.findIndex(contact => contact.id === updatedContact.id);
-    this.fullContacts[contactIndex] = updatedContact;
+  updateContact(contact: IContact): Observable<number> {
+    return this.httpClient.put<number>(`${this.baseUrl}contacts/${contact.id}`, contact);
   }
 
   // Method to add contact
