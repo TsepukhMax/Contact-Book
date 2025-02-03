@@ -89,7 +89,7 @@ app.put('/contacts/:id', (req, res) => {
         data[contactIndex] = contact;
         writeDb(data);
 
-        res.json(contact);
+        res.json(contact.id);
     });
 });
 
