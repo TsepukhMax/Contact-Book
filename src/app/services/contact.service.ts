@@ -62,11 +62,8 @@ export class ContactService {
   }
 
   // Method to add contact
-  addContact(contact: IContact): number {
-    const newId = Date.now();
-    const newContact = { ...contact, id: newId };
-    this.fullContacts.push(newContact);
-    return newId;
+  addContact(contact: IContact): Observable<number> {
+    return this.httpClient.post<number>(`${this.baseUrl}contacts`, { contact });
   }
 
   // Method to delete a contact by ID
