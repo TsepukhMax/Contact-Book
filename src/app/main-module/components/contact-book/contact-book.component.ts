@@ -115,8 +115,9 @@ export class ContactBookComponent {
   }
 
   deleteContact(): void {
-    this.contactService.deleteContact(this.selectedContact.id);
-    this.refreshContactsList();
+    this.contactService.deleteContact(this.selectedContact.id).subscribe(() => {
+      this.refreshContactsList();
+    });
   }
 
   private refreshContactsList(selectedContactId?: number): void {
