@@ -2,7 +2,7 @@ import { Component, ViewChild } from "@angular/core";
 import { ContactService } from "../../../services/contact.service";
 import { IContact, IContactShort } from "../../../interfaces";
 import { ContactDetailComponent } from "../contact-detail/contact-detail.component";
-import { Observable } from "rxjs";
+import { Observable, combineLatest, of } from "rxjs";
 
 
 @Component({
@@ -121,19 +121,20 @@ export class ContactBookComponent {
   }
 
   private refreshContactsList(selectedContactId?: number): void {
-    this.contactService.getContacts().subscribe((shortContacts: IContactShort[]) => {
-      this.shortContacts = this.sortContacts(shortContacts);
+    const getContactByIdRequest$ = selectedContactId
+    ? this.contactService.getContactById(selectedContactId)
+    : of(null);
 
+    combineLatest([
+      this.contactService.getContacts(),
+      getContactByIdRequest$,
+    ])
+    .subscribe(([shortContacts, contact]) => {
+      this.shortContacts = this.sortContacts(shortContacts);
       this.shortContactsToDisplay = [...this.shortContacts];
 
-      if (selectedContactId) {
-        // TODO: use switch map or combine
-        this.contactService.getContactById(selectedContactId).subscribe((contact: IContact) => {
-          this.selectedContact = contact;
-        });
-      } else {
-        this.selectedContact = undefined;
-      }
+      this.selectedContact = contact;
+
 
       this.isEditing = false;
       this.onSearchTermChanged(this.searchTerm);
